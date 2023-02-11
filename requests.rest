@@ -3,9 +3,9 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-    "name": "",
-    "email": "",
-    "password": ""
+    "name": "Matheus",
+    "email": "matheus@gmail.com",
+    "password": "testing123"
 }
 
 ### LOGIN
@@ -16,3 +16,11 @@ Content-Type: application/json
     "email": "maria@gmail.com",
     "password": "teste123"
 }
+
+### GET OWN PROFILE
+GET http://localhost:3003/users/user/profile
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjEzOTQyMiwiZXhwIjoxNjc2MTQxMjIyfQ._sR1v9Q-arCftfOGAuhX-BkNLYO9q_RLfU5KHzp_AIQ
+
+### GET OTHER USER PROFILE
+GET http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjEzOTQyMiwiZXhwIjoxNjc2MTQxMjIyfQ._sR1v9Q-arCftfOGAuhX-BkNLYO9q_RLfU5KHzp_AIQ

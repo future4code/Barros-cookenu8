@@ -1,6 +1,6 @@
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
-import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, UserNotFound, WrongPassword } from "../error/UserErrors";
+import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
 import { LoginInputDTO, UserInputDTO } from "../model/userDTO";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
@@ -87,4 +87,22 @@ export class UserBusiness {
             throw new CustomError(error.statusCode, error.message);
         }
     };
+
+    getProfile = async(token: string, id: string) => {
+        try {
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            const result = await userDatabase.getProfile(id)
+
+            if (!result) {
+                throw new UserNotFound()
+            }
+            
+            return result
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message);
+        };
+    }
 }

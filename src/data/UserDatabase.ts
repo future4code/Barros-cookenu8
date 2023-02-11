@@ -29,5 +29,18 @@ export class UserDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
-    }
+    };
+ 
+    getProfile = async (id: string): Promise<User> => {
+        try {
+            const result = await UserDatabase.connection("Users_Cookenu")
+            .select()
+            .where({id: id})
+
+            return result[0]
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    };
+    
 }
