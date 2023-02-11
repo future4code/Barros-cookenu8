@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError";
-import { User } from "../model/userDTO";
+import { InsertFollowingDTO, User } from "../model/userDTO";
 import { BaseDatabase } from "./BaseDatebase";
 
 export class UserDatabase extends BaseDatabase {
@@ -42,5 +42,18 @@ export class UserDatabase extends BaseDatabase {
             throw new CustomError(error.statusCode, error.message)
         }
     };
+
+    follow = async(input: InsertFollowingDTO): Promise<void> => {
+        try {
+            await UserDatabase.connection("Users_Followers_Cookenu")
+            .insert({
+                id: input.id,
+                user_id: input.userId,
+                following_id: input.followId
+            })
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    }
     
 }

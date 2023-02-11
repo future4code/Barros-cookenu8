@@ -1,7 +1,7 @@
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
 import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
-import { LoginInputDTO, UserInputDTO } from "../model/userDTO";
+import { FollowInputDTO, InsertFollowingDTO, LoginInputDTO, UserInputDTO } from "../model/userDTO";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/idGenerator";
@@ -104,5 +104,34 @@ export class UserBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message);
         };
+    };
+
+    follow = async(input: FollowInputDTO) => {
+        try {
+            const { userId, followId } = input
+
+            if (!userId) {
+                throw new Unauthorized()
+            }
+
+            if (!followId) {
+                throw new CustomError(400, "Inform the user id.")
+            } 
+
+            const user = await userDatabase.getProfile(followId)
+            if (!user) {
+                throw new UserNotFound()
+            }
+
+            const id = idGenerator.generateId()
+
+            const newFollow: InsertFollowingDTO = {
+                id, userId, followId
+            }
+
+            await userDatabase.follow(newFollow)
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
     }
 }
