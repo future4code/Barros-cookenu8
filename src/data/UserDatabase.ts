@@ -19,13 +19,13 @@ export class UserDatabase extends BaseDatabase {
         }
     }
 
-    getUserByEmail = async (email: string): Promise<User[]> => {
+    getUserByEmail = async (email: string): Promise<User> => {
         try {
             const result = await UserDatabase.connection("Users_Cookenu")
             .select()
             .where({email: email})
 
-            return result
+            return result[0]
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
