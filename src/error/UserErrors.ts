@@ -32,12 +32,18 @@ export class EmailInUse extends CustomError {
 
 export class UserNotFound extends CustomError {
     constructor() {
-        super(400, "E-mail address not found on database.")
+        super(400, "User not found on database.")
     }
 }
 
 export class WrongPassword extends CustomError {
     constructor() {
         super(400, "Wrong password.")
+    }
+}
+
+export class Unauthorized extends CustomError {
+    constructor() {
+        super(404, "Inform a valid token to continue.")
     }
 }
