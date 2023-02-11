@@ -18,7 +18,7 @@ export class InvalidEmail extends CustomError {
     }
 }
 
-export class InvalidNewPassword extends CustomError {
+export class InvalidPassword extends CustomError {
     constructor() {
         super(400, "Password must be at least 6 characters.")
     }
@@ -27,5 +27,17 @@ export class InvalidNewPassword extends CustomError {
 export class EmailInUse extends CustomError {
     constructor() {
         super(400, "The informed e-mail address is already in use.")
+    }
+}
+
+export class UserNotFound extends CustomError {
+    constructor() {
+        super(400, "E-mail address not found on database.")
+    }
+}
+
+export class WrongPassword extends CustomError {
+    constructor() {
+        super(400, "Wrong password.")
     }
 }
