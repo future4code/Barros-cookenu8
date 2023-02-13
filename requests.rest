@@ -28,3 +28,21 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMt
 ### FOLLOW
 POST http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9/follow
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjE0MjUyNCwiZXhwIjoxNjc2MTQ0MzI0fQ.2EXRdoIBhfl_vUJaTBL5JcN5zXGGDEdy581rRWhtjfg
+
+### CREATE RECIPE
+POST http://localhost:3003/recipes/recipe
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
+Content-Type: application/json
+
+{
+    "title": "Miojo",
+    "description": "Cozinhe o macarrão por 3 minutos em água fervente e adicione o tempero."
+}
+
+### GET ALL RECIPES
+GET http://localhost:3003/recipes/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
+
+### GET RECIPE BY ID
+GET http://localhost:3003/recipes/recipe/0ed3f0fa-ef6f-44d7-94e6-3fe0b45a5083
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
