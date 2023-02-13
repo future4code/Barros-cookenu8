@@ -38,3 +38,11 @@ Content-Type: application/json
     "title": "Miojo",
     "description": "Cozinhe o macarrão por 3 minutos em água fervente e adicione o tempero."
 }
+
+### GET ALL RECIPES
+GET http://localhost:3003/recipes/
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
+
+### GET RECIPE BY ID
+GET http://localhost:3003/recipes/recipe/0ed3f0fa-ef6f-44d7-94e6-3fe0b45a5083
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU

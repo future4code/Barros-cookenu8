@@ -1,7 +1,7 @@
 import { RecipeDatabase } from "../data/RecipeDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
-import { MissingData, MissingDescription, MissingTitle } from "../error/RecipeErrors";
+import { MissingData, MissingDescription, MissingTitle, RecipeNotFound } from "../error/RecipeErrors";
 import { Unauthorized, UserNotFound } from "../error/UserErrors";
 import { InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
 import { IdGenerator } from "../services/idGenerator";
@@ -48,5 +48,43 @@ export class RecipeBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 
         }
-    }
+    };
+
+    getAllRecipes = async(token: string) => {
+        try {
+            
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            const result = recipeDatabase.getAllRecipes()
+            return result
+
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
+    };
+
+    getRecipeById = async(token: string, id: string) => {
+        try {
+            
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            if (!id || id === ":id") {
+                throw new CustomError(400, "Recipe ID not informed.")
+            }
+
+            const result = recipeDatabase.getRecipeById(id)
+
+            if (!result) {
+                throw new RecipeNotFound()
+            }
+
+            return result
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
+    };
 }

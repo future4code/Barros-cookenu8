@@ -24,5 +24,37 @@ export class RecipeController {
         } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
-    }
+    };
+
+    getAllRecipes = async(req: Request, res: Response): Promise<void> => {
+        try {
+
+            const userToken = req.headers.authorization as string
+            const recipes = await recipeBusiness.getAllRecipes(userToken)
+            res.status(200).send(recipes)
+         
+        } catch (error:any) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
+    };
+
+    getRecipeById = async(req: Request, res: Response): Promise<void> => {
+       try {
+
+           const userToken = req.headers.authorization as string
+           const recipeId = req.params.id as string
+    
+           const recipe = await recipeBusiness.getRecipeById(userToken, recipeId)
+    
+           res.status(200).send({
+               id: recipe.id,
+               title: recipe.title,
+               description: recipe.description,
+               createdAt: recipe.created_at
+           })
+        
+       } catch (error:any) {
+        res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+       }
+    };
 }

@@ -1,3 +1,11 @@
+export interface Recipe {
+    id: string,
+    title: string,
+    description: string,
+    created_at: Date,
+    author_id: string
+}
+
 export interface RecipeInputDTO {
     title: string,
     description: string,
@@ -9,4 +17,11 @@ export interface InsertRecipeDTO {
     title: string,
     description: string,
     authorId: string
+}
+
+export interface RecipeOutputDTO {
+    id: string,
+    title: string,
+    description: string,
+    createdAt: string
 }

@@ -17,3 +17,9 @@ export class MissingDescription extends CustomError {
         super(400, "Your recipe description must have at least 5 characters.")
     }
 }
+
+export class RecipeNotFound extends CustomError {
+    constructor() {
+        super(400, "Recipe ID informed not found.")
+    }
+}
