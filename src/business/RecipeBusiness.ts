@@ -3,7 +3,7 @@ import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
 import { MissingData, MissingDescription, MissingTitle, RecipeNotFound } from "../error/RecipeErrors";
 import { Unauthorized, UserNotFound } from "../error/UserErrors";
-import { InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
+import { GetAllRecipeOutputDTO, InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
 import { IdGenerator } from "../services/idGenerator";
 
 const recipeDatabase = new RecipeDatabase()
@@ -57,8 +57,18 @@ export class RecipeBusiness {
                 throw new Unauthorized()
             }
 
-            const result = recipeDatabase.getAllRecipes()
-            return result
+            const result = await recipeDatabase.getAllRecipes()
+            const resultOutput: GetAllRecipeOutputDTO[] = result.map((recipe) => {
+                return {
+                    id: recipe.id,
+                    title: recipe.title,
+                    description: recipe.description,
+                    createdAt: recipe.created_at,
+                    authorId: recipe.author_id
+                }
+            })
+
+            return resultOutput
 
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 

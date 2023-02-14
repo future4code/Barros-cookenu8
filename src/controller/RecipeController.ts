@@ -31,6 +31,7 @@ export class RecipeController {
 
             const userToken = req.headers.authorization as string
             const recipes = await recipeBusiness.getAllRecipes(userToken)
+            
             res.status(200).send(recipes)
          
         } catch (error:any) {
