@@ -115,12 +115,17 @@ export class UserBusiness {
             }
 
             if (!followId) {
-                throw new CustomError(400, "Inform the user id.")
+                throw new CustomError(400, "Inform the user id to follow.")
             } 
 
             const user = await userDatabase.getProfile(followId)
             if (!user) {
                 throw new UserNotFound()
+            }
+
+            const getFollow = await userDatabase.getFollowListByUsersId(userId, followId)
+            if (getFollow) {
+                throw new CustomError(404, "You already follow this user.")
             }
 
             const id = idGenerator.generateId()
@@ -133,5 +138,30 @@ export class UserBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 
         }
-    }
+    };
+
+    unfollow = async(input: FollowInputDTO): Promise<void> => {
+        try {
+
+            const { userId, followId } = input
+
+            if (!userId) {
+                throw new Unauthorized()
+            }
+
+            if (!followId) {
+                throw new CustomError(400, "Inform user ID to unfollow.")
+            }
+
+            const getFollow = await userDatabase.getFollowListByUsersId(userId, followId)
+            if (!getFollow) {
+                throw new CustomError(404, "It looks like you do not follow this user.")
+            }
+
+            await userDatabase.unfollow(getFollow.id)
+            
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message);        
+        }
+    };
 }

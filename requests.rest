@@ -3,9 +3,9 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-    "name": "Matheus",
-    "email": "matheus@gmail.com",
-    "password": "testing123"
+    "name": "Luiza",
+    "email": "luiza@gmail.com",
+    "password": "testing12345"
 }
 
 ### LOGIN
@@ -25,10 +25,6 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMt
 GET http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjEzOTQyMiwiZXhwIjoxNjc2MTQxMjIyfQ._sR1v9Q-arCftfOGAuhX-BkNLYO9q_RLfU5KHzp_AIQ
 
-### FOLLOW
-POST http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9/follow
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjE0MjUyNCwiZXhwIjoxNjc2MTQ0MzI0fQ.2EXRdoIBhfl_vUJaTBL5JcN5zXGGDEdy581rRWhtjfg
-
 ### CREATE RECIPE
 POST http://localhost:3003/recipes/recipe
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
@@ -46,3 +42,11 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMt
 ### GET RECIPE BY ID
 GET http://localhost:3003/recipes/recipe/0ed3f0fa-ef6f-44d7-94e6-3fe0b45a5083
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjMzMDc1MCwiZXhwIjoxNjc2MzMyNTUwfQ.ahAJVv2znP7YvRhu69Grhda0W3MlWOHTUal_9FKcUmU
+
+### FOLLOW
+POST http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9/follow
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjQwODgyOCwiZXhwIjoxNjc2NDEwNjI4fQ.3eNKTnOg9zWSgmB_qPW2Qzn2aEhOB0JbhyG5-7-IIvI
+
+### UNFOLLOW
+DELETE http://localhost:3003/users/user/614a7174-6e53-48cd-8e62-e2d745f73ca9/unfollow
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjQwODgyOCwiZXhwIjoxNjc2NDEwNjI4fQ.3eNKTnOg9zWSgmB_qPW2Qzn2aEhOB0JbhyG5-7-IIvI
