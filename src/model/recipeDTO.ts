@@ -25,3 +25,11 @@ export interface RecipeOutputDTO {
     description: string,
     createdAt: string
 }
+
+export interface GetAllRecipeOutputDTO {
+    id: string,
+    title: string,
+    description: string,
+    createdAt: Date,
+    authorId: string
+}
