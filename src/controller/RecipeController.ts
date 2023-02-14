@@ -58,4 +58,19 @@ export class RecipeController {
         res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
        }
     };
+
+    getFeed = async(req: Request, res: Response): Promise<void> => {
+
+        try {
+            const userToken = req.headers.authorization as string
+            const authenticatorData = authenticator.getTokenData(userToken)
+    
+            const result = await recipeBusiness.getFeed(userToken, authenticatorData.id)
+     
+            res.status(200).send({recipes: result})
+         
+        } catch (error:any) {
+         res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
+    };
 }

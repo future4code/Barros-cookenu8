@@ -97,4 +97,39 @@ export class RecipeBusiness {
             throw new CustomError(error.statusCode, error.message); 
         }
     };
+
+    getFeed = async(token: string, userId: string) => {
+
+        try {
+
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            const findUser = await userDatabase.getProfile(userId)
+            if (!findUser) {
+                throw new UserNotFound()
+            }
+
+            const following = await userDatabase.getFollowListByUsersId(userId)
+
+            const allRecipes = []
+
+            for (let i = 0; i < following.length; i++) {
+                const recipesByUser = await recipeDatabase.getRecipesByAuthorId(following[i].following_id)
+                if (recipesByUser.length > 0) {
+                    allRecipes.push(...recipesByUser)
+                }
+            }
+
+            if (allRecipes.length === 0) {
+                throw new CustomError(400, "No recipes found.")
+            }
+
+            return allRecipes
+            
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
+    }
 }

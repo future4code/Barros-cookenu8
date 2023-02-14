@@ -30,5 +30,5 @@ export interface FollowInputDTO {
 export interface FollowOutputDTO {
     id: string,
     user_id: string,
-    follow_id: string
+    following_id: string
 }
