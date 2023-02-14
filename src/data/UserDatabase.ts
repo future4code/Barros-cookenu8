@@ -1,5 +1,5 @@
 import { CustomError } from "../error/CustomError";
-import { InsertFollowingDTO, User } from "../model/userDTO";
+import { FollowOutputDTO, InsertFollowingDTO, User } from "../model/userDTO";
 import { BaseDatabase } from "./BaseDatebase";
 
 export class UserDatabase extends BaseDatabase {
@@ -51,6 +51,33 @@ export class UserDatabase extends BaseDatabase {
                 user_id: input.userId,
                 following_id: input.followId
             })
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    };
+
+    unfollow = async(id: string): Promise<void> => {
+        try {
+
+            await UserDatabase.connection("Users_Followers_Cookenu")
+            .delete()
+            .where({id})
+
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    };
+
+    getFollowListByUsersId = async(userId: string, followId: string): Promise<FollowOutputDTO> => {
+        try {
+
+            const result = await UserDatabase.connection("Users_Followers_Cookenu")
+            .select()
+            .where({user_id: userId})
+            .andWhere({following_id: followId})
+
+            return result[0]
+            
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }

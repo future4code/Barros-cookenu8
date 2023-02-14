@@ -83,4 +83,22 @@ export class UserController {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     };
+
+    unfollow = async(req: Request, res: Response): Promise<void> => {
+        
+        try {
+            const token = req.headers.authorization as string
+            const authenticationData = authenticator.getTokenData(token)
+            const userId = authenticationData.id
+            const followId = req.params.id
+
+            const input = {userId, followId}
+            await userBusiness.unfollow(input)
+
+            res.status(200).send({message: "User unfollowed!"})
+
+        } catch (error:any) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
+    }
 }

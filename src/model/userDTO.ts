@@ -26,3 +26,9 @@ export interface FollowInputDTO {
     userId: string,
     followId: string
 }
+
+export interface FollowOutputDTO {
+    id: string,
+    user_id: string,
+    follow_id: string
+}
