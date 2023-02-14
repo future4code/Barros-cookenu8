@@ -68,15 +68,14 @@ export class UserDatabase extends BaseDatabase {
         }
     };
 
-    getFollowListByUsersId = async(userId: string, followId: string): Promise<FollowOutputDTO> => {
+    getFollowListByUsersId = async(userId: string): Promise<FollowOutputDTO[]> => {
         try {
 
             const result = await UserDatabase.connection("Users_Followers_Cookenu")
             .select()
             .where({user_id: userId})
-            .andWhere({following_id: followId})
 
-            return result[0]
+            return result
             
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)

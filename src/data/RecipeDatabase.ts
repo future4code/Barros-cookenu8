@@ -27,7 +27,7 @@ export class RecipeDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)  
         }
-    }
+    };
 
     getRecipeById = async(id: string): Promise<Recipe> => {
 
@@ -42,5 +42,20 @@ export class RecipeDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
-    }
+    };
+
+    getRecipesByAuthorId = async(id: string) => {
+        try {
+
+            const result = await RecipeDatabase.connection("Recipes_Cookenu")
+            .select("Recipes_Cookenu.id", "Recipes_Cookenu.title", "Recipes_Cookenu.description", "Recipes_Cookenu.created_at as createdAt", "Users_Cookenu.id as userId", "Users_Cookenu.name as userName")
+            .where({author_id: id})
+            .join("Users_Cookenu", "author_id", "=", "Users_Cookenu.id")
+
+            return result
+            
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    };
 }

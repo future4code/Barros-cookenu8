@@ -123,8 +123,13 @@ export class UserBusiness {
                 throw new UserNotFound()
             }
 
-            const getFollow = await userDatabase.getFollowListByUsersId(userId, followId)
-            if (getFollow) {
+            const getFollow = await userDatabase.getFollowListByUsersId(userId)
+
+            const getFollowId = getFollow.filter((user) => {
+                return user.following_id === followId
+            })
+
+            if (getFollowId.length > 0) {
                 throw new CustomError(404, "You already follow this user.")
             }
 
@@ -153,12 +158,17 @@ export class UserBusiness {
                 throw new CustomError(400, "Inform user ID to unfollow.")
             }
 
-            const getFollow = await userDatabase.getFollowListByUsersId(userId, followId)
-            if (!getFollow) {
-                throw new CustomError(404, "It looks like you do not follow this user.")
+            const getFollow = await userDatabase.getFollowListByUsersId(userId)
+
+            const getFollowId = getFollow.filter((user) => {
+                return user.following_id === followId
+            })
+
+            if (getFollowId.length === 0) {
+                throw new CustomError(404, "You do not follow this user.")
             }
 
-            await userDatabase.unfollow(getFollow.id)
+            await userDatabase.unfollow(getFollowId[0].id)
             
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message);        
