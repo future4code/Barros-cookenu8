@@ -1,3 +1,4 @@
 export type AuthenticationData = {
-    id: string
+    id: string,
+    role: string
 }

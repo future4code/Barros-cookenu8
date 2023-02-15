@@ -1,6 +1,6 @@
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
-import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
+import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, RoleNotFound, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
 import { FollowInputDTO, InsertFollowingDTO, LoginInputDTO, UserInputDTO } from "../model/userDTO";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
@@ -15,9 +15,9 @@ export class UserBusiness {
     createUser = async (input: UserInputDTO) => {
         try {
 
-            const { name, email, password } = input
+            const { name, email, password, role } = input
 
-            if (!name && !email && !password) {
+            if (!name && !email && !password && !role) {
                 throw new MissingData()
             }
 
@@ -33,6 +33,10 @@ export class UserBusiness {
                 throw new InvalidPassword()
             }
 
+            if (role.toUpperCase() !== "NORMAL" && role.toUpperCase() !== "ADMIN") {
+                throw new RoleNotFound()
+            }
+
             const emailInUse = await userDatabase.getUserByEmail(email)
             if (emailInUse) {
                 throw new EmailInUse()
@@ -42,11 +46,11 @@ export class UserBusiness {
             const cypherPassword = await hashManager.hash(password)
 
             const newUser = {
-                id, name, email, password: cypherPassword
+                id, name, email, password: cypherPassword, role: role.toUpperCase()
             }
 
             await userDatabase.createUser(newUser)
-            const token = authenticator.generateToken({id})
+            const token = authenticator.generateToken({id, role})
             return token
 
         } catch (error:any) {
@@ -81,7 +85,7 @@ export class UserBusiness {
                 throw new WrongPassword()
             }
       
-            const token = authenticator.generateToken({id: user.id})
+            const token = authenticator.generateToken({id: user.id, role: user.role})
             return token
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message);

@@ -54,3 +54,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMt
 ### GET USER FEED
 GET http://localhost:3003/recipes/user/feed
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMtNDI1My1hOTUxLTUzMzliMDIwOGIxZSIsImlhdCI6MTY3NjQxMDczMCwiZXhwIjoxNjc2NDEyNTMwfQ.9YN-XF-zCQF8u3sm4IvLxCBs_nAOPvuMFkz8LIC2ZAs
+
+### EDIT RECIPE
+PATCH http://localhost:3003/recipes/recipe/e6d78367-6841-47e7-b807-4d2ea1ae9a28/edit
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGE3MTc0LTZlNTMtNDhjZC04ZTYyLWUyZDc0NWY3M2NhOSIsImlhdCI6MTY3NjUwMTcyMCwiZXhwIjoxNjc2NTA1MzIwfQ.xZzo9ky1_9ymnPCowWOKMM0_OzzejixCle2TtmucEiE
+Content-Type: application/json
+
+{
+    "title": "Whey Protein"
+}

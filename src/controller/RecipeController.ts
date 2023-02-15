@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { RecipeBusiness } from "../business/RecipeBusiness";
-import { RecipeInputDTO } from "../model/recipeDTO";
+import { EditRecipeInput, RecipeInputDTO } from "../model/recipeDTO";
 import { Authenticator } from "../services/Authenticator";
 
 const authenticator = new Authenticator()
@@ -73,4 +73,22 @@ export class RecipeController {
          res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
     };
+
+    editRecipe = async(req: Request, res: Response): Promise<void> => {
+        try {
+            const userToken = req.headers.authorization as string
+            const title = req.body.title as string
+            const description = req.body.description as string
+            const recipeId = req.params.id as string
+            const input: EditRecipeInput = {id: recipeId, title, description}
+
+            const author = authenticator.getTokenData(userToken)
+            
+            await recipeBusiness.editRecipe(userToken, author.id, input)
+
+            res.status(201).send({message: "Recipe edited!"})
+        } catch (error:any) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
+    }
 }

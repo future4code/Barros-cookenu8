@@ -2,7 +2,7 @@ import * as jwt from 'jsonwebtoken'
 import { AuthenticationData } from "../model/authenticationData";
 
 export class Authenticator {
-    public generateToken = ({id}: AuthenticationData): string => {
+    public generateToken = ({id, role}: AuthenticationData): string => {
         const token = jwt.sign(
             {id},
             process.env.JWT_KEY as string,
@@ -15,7 +15,8 @@ export class Authenticator {
     public getTokenData = (token: string): AuthenticationData => {
         const payload = jwt.verify(token, process.env.JWT_KEY as string) as AuthenticationData
         const result: AuthenticationData = {
-            id: payload.id
+            id: payload.id,
+            role: payload.role
         }
 
         return result

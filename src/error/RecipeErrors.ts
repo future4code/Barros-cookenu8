@@ -18,6 +18,12 @@ export class MissingDescription extends CustomError {
     }
 }
 
+export class MissingDataEdit extends CustomError {
+    constructor() {
+        super(400, "Provide recipe title and description to continue.")
+    }
+}
+
 export class RecipeNotFound extends CustomError {
     constructor() {
         super(400, "Recipe ID informed not found.")
