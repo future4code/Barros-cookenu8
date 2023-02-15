@@ -182,5 +182,32 @@ export class RecipeBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 
         }
+    };
+
+    deleteRecipe = async(token: string, userId: string, userRole: string, recipeId: string): Promise<void> => {
+        try {
+
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            if (!recipeId || recipeId === ":id") {
+                throw new CustomError(400, "Recipe id not informed.")
+            }
+
+            const getRecipe = await recipeDatabase.getRecipeById(recipeId)
+
+            if (!getRecipe) {
+                throw new RecipeNotFound()
+            }
+
+            if (userRole === "NORMAL" && getRecipe.author_id !== userId) {
+                throw new CustomError(400, 'You must be the author of this recipe to delete it.')
+            }
+
+            await recipeDatabase.deleteRecipe(recipeId)
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
     }
 }

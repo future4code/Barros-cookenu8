@@ -4,7 +4,7 @@ import { AuthenticationData } from "../model/authenticationData";
 export class Authenticator {
     public generateToken = ({id, role}: AuthenticationData): string => {
         const token = jwt.sign(
-            {id},
+            {id, role},
             process.env.JWT_KEY as string,
             {expiresIn: "1h"}
         )
