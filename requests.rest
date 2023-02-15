@@ -3,9 +3,10 @@ POST http://localhost:3003/users/signup
 Content-Type: application/json
 
 {
-    "name": "Luiza",
-    "email": "luiza@gmail.com",
-    "password": "testing12345"
+    "name": "Matheus",
+    "email": "matheus@gmail.com",
+    "password": "testing12345",
+    "role": "normal"
 }
 
 ### LOGIN
@@ -13,8 +14,8 @@ POST http://localhost:3003/users/login
 Content-Type: application/json
 
 {
-    "email": "matheus@gmail.com",
-    "password": "testing123"
+    "email": "maria@gmail.com",
+    "password": "testing12345"
 }
 
 ### GET OWN PROFILE
@@ -27,12 +28,12 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjJlMmU2MWFiLTJiZGMt
 
 ### CREATE RECIPE
 POST http://localhost:3003/recipes/recipe
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxNGE3MTc0LTZlNTMtNDhjZC04ZTYyLWUyZDc0NWY3M2NhOSIsImlhdCI6MTY3NjQxMTczNSwiZXhwIjoxNjc2NDE1MzM1fQ.VNIMiu69pU_7hS3TFuGCF90brIj9hu-FnP5J3PEzj6M
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjNjYTkzZGRkLTE1ZTctNDgxZS04YmFlLWY2OTMwNjdkOTZiZSIsImlhdCI6MTY3NjUwMzE2MSwiZXhwIjoxNjc2NTA2NzYxfQ.sT-pku607JeOmExOjDxATj5Ebye2oR-LJjqbBPtZ2Kc
 Content-Type: application/json
 
 {
-    "title": "Whey",
-    "description": "Misture o pó de whey em água em temperatura ambiente."
+    "title": "Ovo frito",
+    "description": "Frite o ovo no óleo quente até o ponto desejado."
 }
 
 ### GET ALL RECIPES
@@ -63,3 +64,7 @@ Content-Type: application/json
 {
     "title": "Whey Protein"
 }
+
+### DELETE RECIPE
+DELETE http://localhost:3003/recipes/recipe/ac980b55-6f3e-4771-b6b9-8a8bfbab82c1/delete
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA2YTU3MmQ3LTcyZWMtNGFhNy04MWI5LTFjNmJkZDYwNjc0YSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTY3NjUwMzY0MCwiZXhwIjoxNjc2NTA3MjQwfQ.BatN8ynGdMEQQO3YLNSEon3ugVWLq0jDdthZs6911OE

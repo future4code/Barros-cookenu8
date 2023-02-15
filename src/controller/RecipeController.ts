@@ -90,5 +90,20 @@ export class RecipeController {
         } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
+    };
+
+    deleteRecipe = async(req: Request, res: Response): Promise<void> => {
+        try {
+            const userToken = req.headers.authorization as string
+            const recipeId = req.params.id as string
+
+            const user = authenticator.getTokenData(userToken)
+            
+            await recipeBusiness.deleteRecipe(userToken, user.id, user.role, recipeId)
+
+            res.status(201).send({message: "Recipe deleted!"})
+        } catch (error:any) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
     }
 }
