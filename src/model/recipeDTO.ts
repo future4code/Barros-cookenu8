@@ -33,3 +33,9 @@ export interface GetAllRecipeOutputDTO {
     createdAt: Date,
     authorId: string
 }
+
+export interface EditRecipeInput {
+    id: string,
+    title: string,
+    description: string
+}

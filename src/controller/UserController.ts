@@ -14,7 +14,8 @@ export class UserController {
             const input: UserInputDTO = {
                 name: req.body.name,
                 password: req.body.password,
-                email: req.body.email
+                email: req.body.email,
+                role: req.body.role
             }
 
             const token = await userBusiness.createUser(input)

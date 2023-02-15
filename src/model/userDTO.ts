@@ -2,13 +2,15 @@ export interface User {
     id: string,
     name: string,
     email: string,
-    password: string
+    password: string,
+    role: string
 }
 
 export interface UserInputDTO {
     name: string,
     email: string,
-    password: string
+    password: string,
+    role: string
 }
 
 export interface LoginInputDTO {

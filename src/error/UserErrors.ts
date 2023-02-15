@@ -2,7 +2,7 @@ import { CustomError } from "./CustomError";
 
 export class MissingData extends CustomError {
     constructor() {
-        super(400, "You must provided 'name', 'email' and 'password' to continue.")
+        super(400, "You must provided 'name', 'email', 'password' and 'role' to continue.")
     }
 }
 
@@ -21,6 +21,12 @@ export class InvalidEmail extends CustomError {
 export class InvalidPassword extends CustomError {
     constructor() {
         super(400, "Password must be at least 6 characters.")
+    }
+}
+
+export class RoleNotFound extends CustomError {
+    constructor() {
+        super(400, "'Role' must be 'ADMIN' or 'NORMAL'.")
     }
 }
 

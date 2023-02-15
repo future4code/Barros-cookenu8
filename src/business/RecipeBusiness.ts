@@ -1,9 +1,9 @@
 import { RecipeDatabase } from "../data/RecipeDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
-import { MissingData, MissingDescription, MissingTitle, RecipeNotFound } from "../error/RecipeErrors";
+import { MissingData, MissingDataEdit, MissingDescription, MissingTitle, RecipeNotFound } from "../error/RecipeErrors";
 import { Unauthorized, UserNotFound } from "../error/UserErrors";
-import { GetAllRecipeOutputDTO, InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
+import { EditRecipeInput, GetAllRecipeOutputDTO, InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
 import { IdGenerator } from "../services/idGenerator";
 
 const recipeDatabase = new RecipeDatabase()
@@ -86,7 +86,7 @@ export class RecipeBusiness {
                 throw new CustomError(400, "Recipe ID not informed.")
             }
 
-            const result = recipeDatabase.getRecipeById(id)
+            const result = await recipeDatabase.getRecipeById(id)
 
             if (!result) {
                 throw new RecipeNotFound()
@@ -128,6 +128,57 @@ export class RecipeBusiness {
 
             return allRecipes
             
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message); 
+        }
+    };
+
+    editRecipe = async(token: string, userId: string, input: EditRecipeInput): Promise<void> => {
+        try {
+
+            const {id, title, description} = input
+
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            if (!id && !title && !description) {
+                throw new MissingDataEdit()
+            }
+
+            if (!id || id === ":id") {
+                throw new CustomError(400, "Recipe id not informed.")
+            }
+
+            const getRecipe = await recipeDatabase.getRecipeById(id)
+
+            if (!getRecipe) {
+                throw new RecipeNotFound()
+            }
+
+            if (title && title.length < 2) {
+                throw new MissingTitle()
+            }
+
+            if (description && description.length < 5) {
+                throw new MissingDescription()
+            }
+
+            if (!title) {
+                title === getRecipe.title
+            }
+
+            if (!description) {
+                description === getRecipe.description
+            }
+
+            if (getRecipe.author_id !== userId) {
+                throw new CustomError(400, 'You must be the author of this recipe to edit it.')
+            }
+
+            const recipe: EditRecipeInput = {id, title, description}
+
+            await recipeDatabase.editRecipe(recipe)
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 
         }
