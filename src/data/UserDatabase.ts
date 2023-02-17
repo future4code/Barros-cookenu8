@@ -18,7 +18,7 @@ export class UserDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
-    }
+    };
 
     getUserByEmail = async (email: string): Promise<User> => {
         try {
@@ -31,7 +31,16 @@ export class UserDatabase extends BaseDatabase {
             throw new CustomError(error.statusCode, error.message)
         }
     };
- 
+
+    getAllUsers = async(): Promise<User[]> => {
+        try {
+            const result = await UserDatabase.connection("Users_Cookenu").select()
+            return result
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
+    };
+
     getProfile = async (id: string): Promise<User> => {
         try {
             const result = await UserDatabase.connection("Users_Cookenu")
@@ -91,6 +100,6 @@ export class UserDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
-    }
+    };
     
 }

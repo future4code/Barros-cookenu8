@@ -53,3 +53,9 @@ export class Unauthorized extends CustomError {
         super(404, "Inform a valid token to continue.")
     }
 }
+
+export class InvalidToken extends CustomError {
+    constructor() {
+        super (404, "The token informed is not valid.")
+    }
+}

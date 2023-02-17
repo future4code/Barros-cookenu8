@@ -2,13 +2,15 @@ import { RecipeDatabase } from "../data/RecipeDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
 import { MissingData, MissingDataEdit, MissingDescription, MissingTitle, RecipeNotFound } from "../error/RecipeErrors";
-import { Unauthorized, UserNotFound } from "../error/UserErrors";
+import { InvalidEmail, InvalidToken, Unauthorized, UserNotFound } from "../error/UserErrors";
 import { EditRecipeInput, GetAllRecipeOutputDTO, InsertRecipeDTO, RecipeInputDTO } from "../model/recipeDTO";
+import { Authenticator } from "../services/Authenticator";
 import { IdGenerator } from "../services/idGenerator";
 
 const recipeDatabase = new RecipeDatabase()
 const idGenerator = new IdGenerator()
 const userDatabase = new UserDatabase()
+const authenticator = new Authenticator()
 
 export class RecipeBusiness {
 
@@ -57,6 +59,11 @@ export class RecipeBusiness {
                 throw new Unauthorized()
             }
 
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
+            }
+
             const result = await recipeDatabase.getAllRecipes()
             const resultOutput: GetAllRecipeOutputDTO[] = result.map((recipe) => {
                 return {
@@ -82,6 +89,11 @@ export class RecipeBusiness {
                 throw new Unauthorized()
             }
 
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
+            }
+
             if (!id || id === ":id") {
                 throw new CustomError(400, "Recipe ID not informed.")
             }
@@ -104,6 +116,11 @@ export class RecipeBusiness {
 
             if (!token) {
                 throw new Unauthorized()
+            }
+
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
             }
 
             const findUser = await userDatabase.getProfile(userId)
@@ -140,6 +157,11 @@ export class RecipeBusiness {
 
             if (!token) {
                 throw new Unauthorized()
+            }
+
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
             }
 
             if (!id && !title && !description) {
@@ -191,6 +213,11 @@ export class RecipeBusiness {
                 throw new Unauthorized()
             }
 
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
+            }
+
             if (!recipeId || recipeId === ":id") {
                 throw new CustomError(400, "Recipe id not informed.")
             }
@@ -209,5 +236,5 @@ export class RecipeBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message); 
         }
-    }
+    };
 }
