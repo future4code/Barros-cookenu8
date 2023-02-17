@@ -81,6 +81,16 @@ export class UserDatabase extends BaseDatabase {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message)
         }
+    };
+
+    deleteAccount = async(id: string): Promise<void> => {
+        try {
+            await UserDatabase.connection("Users_Cookenu")
+            .delete()
+            .where({id})
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message)
+        }
     }
     
 }

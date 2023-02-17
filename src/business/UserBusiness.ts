@@ -1,3 +1,4 @@
+import { RecipeDatabase } from "../data/RecipeDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
 import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, RoleNotFound, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
@@ -7,6 +8,7 @@ import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/idGenerator";
 
 const userDatabase = new UserDatabase()
+const recipeDatabase = new RecipeDatabase()
 const idGenerator = new IdGenerator()
 const authenticator = new Authenticator()
 const hashManager = new HashManager()
@@ -178,4 +180,41 @@ export class UserBusiness {
             throw new CustomError(error.statusCode, error.message);        
         }
     };
+
+    deleteAccount = async(token: string, deleteUserId: string, userRole: string): Promise<void> => {
+        try {
+
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            if (userRole.toUpperCase() !== "ADMIN") {
+                throw new CustomError(400, "You must be an ADMIN user to delete an account.")
+            }
+
+            if (!deleteUserId || deleteUserId === ":id") {
+                throw new CustomError(400, "User ID not informed.")
+            }
+
+            const getUser = await userDatabase.getProfile(deleteUserId)
+            if (!getUser) {
+                throw new UserNotFound()
+            }
+
+            const getFollowing = await userDatabase.getFollowListByUsersId(deleteUserId)
+            for (let i = 0; i < getFollowing.length; i++) {
+                await userDatabase.unfollow(getFollowing[i].id)
+            }
+
+            const getRecipes = await recipeDatabase.getRecipesByAuthorId(deleteUserId)
+            for (let i = 0; i < getRecipes.length; i++) {
+                await recipeDatabase.deleteRecipe(getRecipes[i].id)
+            }
+
+            await userDatabase.deleteAccount(deleteUserId)
+
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message);         
+        }
+    }
 }

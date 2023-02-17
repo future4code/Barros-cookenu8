@@ -105,5 +105,5 @@ export class RecipeController {
         } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
-    }
+    };
 }

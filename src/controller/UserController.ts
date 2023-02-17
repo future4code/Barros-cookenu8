@@ -101,5 +101,19 @@ export class UserController {
         } catch (error:any) {
             res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
         }
+    };
+
+    deleteAccount = async(req: Request, res: Response): Promise<void> => {
+        try {
+            const token = req.headers.authorization as string
+            const authenticationData = authenticator.getTokenData(token)
+            const deleteUserId = req.params.id as string
+
+            await userBusiness.deleteAccount(token, deleteUserId, authenticationData.role)
+
+            res.status(200).send({message: "Account deleted."})
+        } catch (error:any) {
+            res.status(error.statusCode || 400).send(error.message || error.sqlMessage)
+        }
     }
 }
