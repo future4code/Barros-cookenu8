@@ -1,8 +1,8 @@
 import { RecipeDatabase } from "../data/RecipeDatabase";
 import { UserDatabase } from "../data/UserDatabase";
 import { CustomError } from "../error/CustomError";
-import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, MissingData, RoleNotFound, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
-import { FollowInputDTO, InsertFollowingDTO, LoginInputDTO, UserInputDTO } from "../model/userDTO";
+import { EmailInUse, InvalidEmail, InvalidName, InvalidPassword, InvalidToken, MissingData, RoleNotFound, Unauthorized, UserNotFound, WrongPassword } from "../error/UserErrors";
+import { FollowInputDTO, InsertFollowingDTO, LoginInputDTO, User, UserInputDTO } from "../model/userDTO";
 import { Authenticator } from "../services/Authenticator";
 import { HashManager } from "../services/HashManager";
 import { IdGenerator } from "../services/idGenerator";
@@ -94,10 +94,34 @@ export class UserBusiness {
         }
     };
 
+    getAllUsers = async(token: string): Promise<User[]> => {
+        try {
+
+            if (!token) {
+                throw new Unauthorized()
+            }
+
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
+            }
+
+            const result = await userDatabase.getAllUsers()
+            return result
+        } catch (error:any) {
+            throw new CustomError(error.statusCode, error.message);
+        }
+    };
+
     getProfile = async(token: string, id: string) => {
         try {
             if (!token) {
                 throw new Unauthorized()
+            }
+
+            const validateToken = authenticator.getTokenData(token)
+            if (!validateToken) {
+                throw new InvalidToken()
             }
 
             const result = await userDatabase.getProfile(id)
@@ -216,5 +240,5 @@ export class UserBusiness {
         } catch (error:any) {
             throw new CustomError(error.statusCode, error.message);         
         }
-    }
+    };
 }
