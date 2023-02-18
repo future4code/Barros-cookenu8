@@ -1,7 +1,7 @@
 <h1 align="center">Cookenu :shallow_pan_of_food:	</h1>
 
 <p align="justify">
-API REST that uses SQL Database to simulate a Food and Recipes Social Network system. Developed as a content fixation project in Labenu's Full Stack Web Developer course. Through the system it is possible to: .</p>
+API REST that uses SQL Database to simulate a Food and Recipes Social Network system. Developed as a content fixation project in Labenu's Full Stack Web Developer course. Through the system it is possible to: sign up, login, follow and unfollow an user, post a recipe, get all recipes or recipe by ID, get user's feed, edit or delete a recipe, return all users, or a profile by ID, and delete an account.</p>
 
 <h1>:woman_technologist: Technologies</h1>
 <ul><li> Typescript </li>
