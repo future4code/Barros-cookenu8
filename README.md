@@ -26,7 +26,7 @@ API REST that uses SQL Database to simulate a Food and Recipes Social Network sy
 <li> Delete a Recipe</li></ul>
 
 <h1>:page_with_curl: Documentation</h1>
-
+https://documenter.getpostman.com/view/25676072/2s93CKNuAN
 
 <h1>:computer: Running the Project</h1>
 
